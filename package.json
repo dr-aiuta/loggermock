@@ -1,0 +1,26 @@
+{
+  "name": "mocklogs",
+  "version": "0.0.1",
+  "description": "mocks console.log()",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dr-aiuta/loggermock.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dr-aiuta/loggermock/issues"
+  },
+  "homepage": "https://github.com/dr-aiuta/loggermock#readme",
+  "devDependencies": {
+    "@types/node": "^18.16.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
