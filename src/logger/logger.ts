@@ -13,6 +13,6 @@ function log({ logSwitch, method, message }: LogOptions, ...args: any[]): void {
   }
 }
 
-export default {
+export {
   log,
 };

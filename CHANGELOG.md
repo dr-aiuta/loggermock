@@ -1,3 +1,7 @@
+# v0.0.3
+
+- Fixed imports and exports
+
 # v0.0.2
 
 - Dist folder
