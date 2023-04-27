@@ -2,10 +2,10 @@
   "name": "mocklogs",
   "version": "0.0.1",
   "description": "mocks console.log()",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/index.ts",
+    "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
