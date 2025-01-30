@@ -1,6 +1,6 @@
 # loggermock
 
-A flexible and type-safe mock logger for testing applications.
+A flexible and type-safe mock logger for testing and development with colored console output.
 
 ## Installation
 
@@ -11,101 +11,93 @@ npm install loggermock
 ## Features
 
 - Type-safe logging interface
-- Easy assertion of logged messages
-- Support for different log levels (debug, info, warn, error)
-- Clear and fluent API for testing
+- Colored console output for different log levels
+- Automatic caller information tracking
+- Environment-aware logging (development/production)
+- Timestamp support
 - Zero dependencies
 
 ## Usage
 
 ```typescript
-import { LoggerMock } from "loggermock";
+import { loggerMock } from "loggermock";
 
-// Create a new logger mock instance
-const logger = new LoggerMock();
+// Basic usage
+loggerMock.info({
+  message: ["User logged in", { userId: "123" }],
+});
 
-// Use the logger in your code
-logger.info("User logged in", { userId: "123" });
-logger.error("Operation failed", new Error("Database connection error"));
+// Force logging even in production
+loggerMock.debug({
+  message: ["Debug information"],
+  forceLog: true,
+});
 
-// Assert logged messages in your tests
-expect(logger.messages).toHaveLength(2);
-expect(logger.messages[0].level).toBe("info");
-expect(logger.messages[0].message).toBe("User logged in");
-expect(logger.messages[0].meta).toEqual({ userId: "123" });
+// Custom method name
+loggerMock.error({
+  message: ["Operation failed", new Error("Database error")],
+  method: "CustomMethod",
+});
 ```
 
 ## API
 
-### LoggerMock
-
-#### Constructor
+### LogOptions Interface
 
 ```typescript
-const logger = new LoggerMock();
-```
-
-#### Methods
-
-- `debug(message: string, ...meta: any[]): void` - Log a debug message
-- `info(message: string, ...meta: any[]): void` - Log an info message
-- `warn(message: string, ...meta: any[]): void` - Log a warning message
-- `error(message: string, ...meta: any[]): void` - Log an error message
-
-#### Properties
-
-- `messages: LogMessage[]` - Array of all logged messages
-- `debugMessages: LogMessage[]` - Array of debug level messages
-- `infoMessages: LogMessage[]` - Array of info level messages
-- `warnMessages: LogMessage[]` - Array of warning level messages
-- `errorMessages: LogMessage[]` - Array of error level messages
-
-### LogMessage Interface
-
-```typescript
-interface LogMessage {
-  level: "debug" | "info" | "warn" | "error";
-  message: string;
-  meta: any[];
-  timestamp: Date;
+interface LogOptions {
+  forceLog?: boolean; // Force logging even in production
+  method?: string; // Optional method name (auto-detected if not provided)
+  message: (string | number | boolean | object)[]; // Message content
 }
 ```
+
+### Methods
+
+Each method accepts a `LogOptions` object:
+
+- `debug(options: LogOptions): void` - Blue colored debug messages
+- `info(options: LogOptions): void` - Green colored info messages
+- `warn(options: LogOptions): void` - Yellow colored warning messages
+- `error(options: LogOptions): void` - Red colored error messages
+- `log(options: LogOptions): void` - Standard log messages
+
+### Output Format
+
+The logger outputs messages in the following format:
+
+```
+[TIMESTAMP] [LEVEL] filename:method:line - message content
+```
+
+### Environment Behavior
+
+- Development: All messages are logged by default
+- Production: Messages are only logged when `forceLog: true`
 
 ## Examples
 
 ### Basic Usage
 
 ```typescript
-const logger = new LoggerMock();
+import { loggerMock } from "loggermock";
 
-logger.info("Application started");
-logger.debug("Processing request", { method: "GET", path: "/users" });
-logger.error("Failed to connect", new Error("Connection timeout"));
+// Debug with object data
+loggerMock.debug({
+  message: ["Processing request", { method: "GET", path: "/users" }],
+});
 
-// Assert messages
-expect(logger.messages).toHaveLength(3);
-expect(logger.infoMessages).toHaveLength(1);
-expect(logger.debugMessages).toHaveLength(1);
-expect(logger.errorMessages).toHaveLength(1);
+// Warning with custom method
+loggerMock.warn({
+  message: ["Rate limit approaching"],
+  method: "RateLimiter",
+});
+
+// Error with error object
+loggerMock.error({
+  message: ["Failed to connect", new Error("Connection timeout")],
+});
 ```
-
-### Testing Specific Log Levels
-
-````typescript
-const logger = new LoggerMock();
-
-function processUser(user: any) {
-  logger.debug('Processing user', user);
-  // ... processing logic
-  logger.info('User processed successfully');
-}
-
-// In your test
-processUser({ id: '123', name: 'John' });
-
-expect(logger.debugMessages[0].meta[0]).toEqual({ id: '123', name: 'John' });
-expect(logger.infoMessages[0].message).toBe('User processed successfully');
-```README.md
 
 ## License
 
@@ -114,8 +106,3 @@ MIT
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-````
-
-This README provides a comprehensive overview of the loggermock library, including installation instructions, usage examples, and API documentation. It's formatted in a clear and organized way to help users quickly understand how to use the library in their projects.
-
-The examples demonstrate both basic usage and more specific testing scenarios, which should help users understand how to effectively use the mock logger in their tests.
