@@ -81,23 +81,3 @@ function createLogger() {
 }
 const loggerMock = createLogger();
 exports.loggerMock = loggerMock;
-loggerMock.debug({
-    forceLog: true,
-    message: ["Hello, world!", "My name is John"],
-});
-loggerMock.info({
-    forceLog: true,
-    message: ["Hello, world!", "My name is John"],
-});
-loggerMock.warn({
-    forceLog: true,
-    message: ["Hello, world!", "My name is John"],
-});
-loggerMock.error({
-    forceLog: true,
-    message: ["Hello, world!", "My name is John"],
-});
-loggerMock.log({
-    forceLog: true,
-    message: ["Hello, world!", "My name is John"],
-});
