@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "mocks console.log()",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
