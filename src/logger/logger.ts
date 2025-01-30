@@ -5,7 +5,7 @@ type LogLevel = "debug" | "info" | "warn" | "error" | "log";
 interface LogOptions {
   forceLog?: boolean;
   method?: string; // Optional since we'll try to get it automatically
-  message: (string | number | boolean | object)[]; // Add message array to options
+  message: (string | number | boolean | object | null | undefined)[]; // Add message array to options
 }
 
 function getCallerInfo(): string {

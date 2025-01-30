@@ -2,7 +2,7 @@ type LogLevel = "debug" | "info" | "warn" | "error" | "log";
 interface LogOptions {
     forceLog?: boolean;
     method?: string;
-    message: (string | number | boolean | object)[];
+    message: (string | number | boolean | object | null | undefined)[];
 }
 declare const loggerMock: {
     debug: (options: LogOptions) => void;
