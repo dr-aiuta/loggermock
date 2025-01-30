@@ -1,3 +1,3 @@
-import { log } from './logger/logger';
+import { loggerMock } from "./logger/logger";
 
-export { log };
+export { loggerMock };
